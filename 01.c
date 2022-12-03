@@ -4,14 +4,14 @@
 #include <string.h>
 
 const char* readFile(const char*);
-const char** getLines(const char*);
+const char** split(const char*, const char);
 
 int main (int argc, char** argv)
 {
 	//get lines from file
 	assert(argc == 2);
 	const char* input = readFile(argv[1]);
-	const char** lines = getLines(input);
+	const char** lines = split(input, '\n');
 
 	free((void*)input);
 
@@ -52,7 +52,7 @@ const char* readFile(const char* fileName)
 }
 
 //split string on newline
-const char** getLines(const char* string)
+const char** split(const char* string, const char splitChar)
 {
 	char** lines;	
 	size_t lineCount = 1;
@@ -65,7 +65,8 @@ const char** getLines(const char* string)
 	{
 		//get length of line
 		length = 0;
-		while (start[length] != '\n')
+
+		while (start[length] != splitChar)
 		{
 			++length;
 		}
@@ -75,7 +76,6 @@ const char** getLines(const char* string)
 		strncpy(line, start, length);
 		line[length] = '\0';
 
-		
 		//add line to lines array
 		lines = realloc(lines, sizeof(char*) * lineCount);
 		lines[lineCount++ - 1] = line;
