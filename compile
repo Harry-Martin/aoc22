@@ -1,0 +1,13 @@
+#!/bin/bash
+
+CC=gcc
+
+cfiles=$(echo *.c)
+
+for file in $cfiles
+do
+	echo Compiling $file...
+	echo to ${file%.c}
+	$CC $file -o ${file%.c}
+done
+
